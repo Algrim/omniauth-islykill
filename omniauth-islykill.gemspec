@@ -12,7 +12,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = 'https://github.com/Algrim/omniauth-islykill'
 
   gem.add_runtime_dependency 'omniauth', '~> 1.2'
-  gem.add_runtime_dependency 'omniauth-saml', '~> 1.2'
+  gem.add_runtime_dependency 'ruby-saml', '~> 0.7.3'
 
   gem.files         = ['README.md', 'CHANGELOG.md'] + Dir['lib/**/*.rb']
   #gem.test_files    = Dir['spec/**/*.rb']
