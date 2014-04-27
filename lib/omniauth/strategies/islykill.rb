@@ -32,7 +32,7 @@ puts " / /  / _` | | | '_   / _` |/ __| |/ /"
 puts "/ /__| (_| | | | |_) | (_| | (__|   < "
 puts " ____/ __,_|_|_|_.__/  __,_| ___|_| _ "
 puts "                                      "
-
+puts request.params
         unless request.params['token']
           raise "Islykill response missing"
         end
