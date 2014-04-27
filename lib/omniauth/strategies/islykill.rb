@@ -35,7 +35,7 @@ puts " ____/ __,_|_|_|_.__/  __,_| ___|_| _ "
 puts "                                      "
 
         unless request.params[:token]
-          raise OmniAuth::Strategies::Islykill::ValidationError.new("Islykill response missing")
+          raise "Islykill response missing"
         end
 puts "Got a token"
         token_base64 = request.params[:token]
@@ -50,7 +50,7 @@ puts "Got a token"
 puts "Name id is " + @name_id
 
         if @name_id.nil? || @name_id.empty?
-          raise OmniAuth::Strategies::Islykill::ValidationError.new("SAML response missing 'name_id'")
+          raise "SAML response missing 'name_id'"
         end
 
 puts "Got a name id " + @name_id
@@ -58,7 +58,7 @@ puts "Got a name id " + @name_id
         response.validate!
 
         super
-      rescue OmniAuth::Strategies::Islykill::ValidationError
+      rescue 
         fail!(:invalid_ticket, $!)
       rescue Onelogin::Saml::ValidationError
         fail!(:invalid_ticket, $!)
