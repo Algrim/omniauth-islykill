@@ -46,7 +46,7 @@ puts "Got a token"
         @name_id = response.name_id
         @attributes = response.attributes
 
-puts "Name id is " + @name_id
+response.validate!
 
         if @name_id.nil? || @name_id.empty?
           raise "SAML response missing 'name_id'"
