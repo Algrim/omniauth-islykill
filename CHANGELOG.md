@@ -1,0 +1,2 @@
+Changelog for omniauth-islykill
+=================
