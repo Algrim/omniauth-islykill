@@ -1,6 +1,5 @@
 require 'omniauth'
 require 'ruby-saml'
-require 'ValidationError'
 
 module OmniAuth
   module Strategies
