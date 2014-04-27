@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.email         = 'algrim.is@outlook.com'
   gem.homepage      = 'https://github.com/Algrim/omniauth-islykill'
 
-  gem.add_runtime_dependency 'omniauth', '~> 1.2'
+  gem.add_runtime_dependency 'omniauth', '~> 1.1.4'
   gem.add_runtime_dependency 'omniauth-saml', '~> 1.2'
 
   gem.files         = ['README.md', 'CHANGELOG.md'] + Dir['lib/**/*.rb']
