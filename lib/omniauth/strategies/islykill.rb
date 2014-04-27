@@ -33,6 +33,8 @@ puts "/ /__| (_| | | | |_) | (_| | (__|   < "
 puts " ____/ __,_|_|_|_.__/  __,_| ___|_| _ "
 puts "                                      "
 
+raise OmniAuth::Strategies::Islykill::ValidationError.new("IN CALLBACK")
+
         unless request.params[:token]
           raise OmniAuth::Strategies::Islykill::ValidationError.new("Islykill response missing")
         end
