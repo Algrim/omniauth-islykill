@@ -36,7 +36,7 @@ puts "                                      "
         unless request.params[:token]
           raise OmniAuth::Strategies::Islykill::ValidationError.new("Islykill response missing")
         end
-
+puts "Got a token"
         token_base64 = request.params[:token]
         islykill_xml_saml_response = Base64.decode64(token_base64)
 
@@ -46,9 +46,13 @@ puts "                                      "
         @name_id = response.name_id
         @attributes = response.attributes
 
+puts "Name id is " + @name_id
+
         if @name_id.nil? || @name_id.empty?
           raise OmniAuth::Strategies::Islykill::ValidationError.new("SAML response missing 'name_id'")
         end
+
+puts "Got a name id " + @name_id
 
         response.validate!
 
