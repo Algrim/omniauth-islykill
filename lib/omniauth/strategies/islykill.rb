@@ -33,24 +33,27 @@ puts "/ /__| (_| | | | |_) | (_| | (__|   < "
 puts " ____/ __,_|_|_|_.__/  __,_| ___|_| _ "
 puts "                                      "
 
-        unless request.params['SAMLResponse']
-          raise OmniAuth::Strategies::SAML::ValidationError.new("SAML response missing")
+        unless request.params[:token]
+          raise OmniAuth::Strategies::Islykill::ValidationError.new("Islykill response missing")
         end
 
-        response = Onelogin::Saml::Response.new(request.params['SAMLResponse'], options)
+        token_base64 = request.params[:token]
+        islykill_xml_saml_response = Base64.decode64(token_base64)
+
+        response = Onelogin::Saml::Response.new(islykill_xml_saml_response, options)
         response.settings = Onelogin::Saml::Settings.new(options)
 
         @name_id = response.name_id
         @attributes = response.attributes
 
         if @name_id.nil? || @name_id.empty?
-          raise OmniAuth::Strategies::SAML::ValidationError.new("SAML response missing 'name_id'")
+          raise OmniAuth::Strategies::Islykill::ValidationError.new("SAML response missing 'name_id'")
         end
 
         response.validate!
 
         super
-      rescue OmniAuth::Strategies::SAML::ValidationError
+      rescue OmniAuth::Strategies::Islykill::ValidationError
         fail!(:invalid_ticket, $!)
       rescue Onelogin::Saml::ValidationError
         fail!(:invalid_ticket, $!)
