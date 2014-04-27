@@ -1,3 +1,6 @@
+require 'omniauth'
+require 'omniauth-saml'
+
 module OmniAuth
   module Strategies
     class Islykill < OmniAuth::Strategy::SAML
