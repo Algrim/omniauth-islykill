@@ -1,0 +1,35 @@
+PATH
+  remote: .
+  specs:
+    omniauth-islykill (0.9.0)
+      omniauth-saml (~> 1.2)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    canonix (0.1.1)
+    hashie (2.1.1)
+    macaddr (1.7.1)
+      systemu (~> 2.6.2)
+    nokogiri (1.5.11)
+    omniauth (1.2.1)
+      hashie (>= 1.2, < 3)
+      rack (~> 1.0)
+    omniauth-saml (1.2.0)
+      omniauth (~> 1.2)
+      ruby-saml (~> 0.7.3)
+    rack (1.5.2)
+    ruby-saml (0.7.3)
+      canonix (= 0.1.1)
+      nokogiri (~> 1.5.0)
+      uuid (~> 2.3)
+    systemu (2.6.4)
+    uuid (2.3.7)
+      macaddr (~> 1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  omniauth-islykill!
+  omniauth-saml
