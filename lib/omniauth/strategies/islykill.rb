@@ -33,11 +33,11 @@ puts "/ /__| (_| | | | |_) | (_| | (__|   < "
 puts " ____/ __,_|_|_|_.__/  __,_| ___|_| _ "
 puts "                                      "
 
-        unless request.params[:token]
+        unless request.params['token']
           raise "Islykill response missing"
         end
 puts "Got a token"
-        token_base64 = request.params[:token]
+        token_base64 = request.params['token']
         islykill_xml_saml_response = Base64.decode64(token_base64)
 
         response = Onelogin::Saml::Response.new(islykill_xml_saml_response, options)
