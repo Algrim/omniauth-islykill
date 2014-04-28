@@ -1,8 +1,9 @@
 PATH
   remote: .
   specs:
-    omniauth-islykill (0.9.0)
-      omniauth-saml (~> 1.2)
+    omniauth-islykill (0.9.5)
+      omniauth (~> 1.2)
+      ruby-saml (~> 0.7.3)
 
 GEM
   remote: https://rubygems.org/
