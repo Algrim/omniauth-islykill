@@ -45,6 +45,8 @@ puts "Got a token"
 
 puts response.attributes
 puts response.validate!
+signedDocument = XMLSecurity::SignedDocument(islykill_xml_saml_response)
+puts signedDocument
 
         @name_id = response.name_id
         @attributes = response.attributes
