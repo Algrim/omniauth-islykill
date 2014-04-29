@@ -43,7 +43,7 @@ puts "Got a token"
 
 puts "about to create a signed document"
 signedDocument = XMLSecurity::SignedDocument.new(islykill_xml_saml_response)
-valid = signedDocument.validate_document("56:D1:0C:DF:29:58:1F:D4:64:C7:B5:DB:AE:18:EF:E6:88:2D:EC:4D")
+valid = signedDocument.validate_document("56:D1:0C:DF:29:58:1F:D4:64:C7:B5:DB:AE:18:EF:E6:88:2D:EC:4D",false)
 puts "signedDocument ready"
 puts valid
 puts signedDocument
