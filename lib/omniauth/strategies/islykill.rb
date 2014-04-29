@@ -1,6 +1,6 @@
 require 'omniauth'
 require 'ruby-saml'
-require "xml_security"
+#require "xml_security"
 
 module OmniAuth
   module Strategies
@@ -42,7 +42,7 @@ puts "Got a token"
         islykill_xml_saml_response = Base64.decode64(token_base64)
 
 puts "about to create a signed document"
-signedDocument = XMLSecurity::SignedDocument(islykill_xml_saml_response)
+signedDocument = XMLSecurity::SignedDocument.new(islykill_xml_saml_response)
 puts "signedDocument ready"
 puts signedDocument
 puts "========================================================="
