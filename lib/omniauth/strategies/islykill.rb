@@ -42,7 +42,7 @@ puts "Got a token"
         islykill_xml_saml_response = Base64.decode64(token_base64)
 
 puts "about to create a signed document"
-signedDocument = XMLSecurity::SignedDocument.new(islykill_xml_saml_response)
+signedDocument = OmniAuth::Strategies::Islykill::SignedDocument.new(islykill_xml_saml_response)
 valid = signedDocument.validate_document("56:D1:0C:DF:29:58:1F:D4:64:C7:B5:DB:AE:18:EF:E6:88:2D:EC:4D",false)
 puts "signedDocument ready"
 puts valid
