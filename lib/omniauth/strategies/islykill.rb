@@ -44,7 +44,7 @@ puts "Got a token"
         response.settings = Onelogin::Saml::Settings.new(options)
 
 puts response.attributes
-puts response.name_id
+puts response.validate!
 
         @name_id = response.name_id
         @attributes = response.attributes
