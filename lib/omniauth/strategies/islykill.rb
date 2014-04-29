@@ -43,7 +43,8 @@ puts "Got a token"
         response = Onelogin::Saml::Response.new(islykill_xml_saml_response, options)
         response.settings = Onelogin::Saml::Settings.new(options)
 
-puts resposne
+puts response.attributes
+puts response.name_id
 
         @name_id = response.name_id
         @attributes = response.attributes
