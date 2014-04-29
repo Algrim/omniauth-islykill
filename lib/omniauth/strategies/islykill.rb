@@ -1,5 +1,6 @@
 require 'omniauth'
 require 'ruby-saml'
+require "xml_security"
 
 module OmniAuth
   module Strategies
