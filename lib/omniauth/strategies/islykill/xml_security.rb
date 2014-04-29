@@ -32,7 +32,7 @@ require "digest/sha2"
 
 module OmniAuth
 module Strategies
-module Islykill
+class Islykill
   class SignedDocument < REXML::Document
     C14N = "http://www.w3.org/2001/10/xml-exc-c14n#"
     DSIG = "http://www.w3.org/2000/09/xmldsig#"
