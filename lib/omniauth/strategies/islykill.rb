@@ -40,13 +40,24 @@ puts "Got a token"
         token_base64 = request.params['token']
         islykill_xml_saml_response = Base64.decode64(token_base64)
 
+puts "about to create a signed document"
+signedDocument = XMLSecurity::SignedDocument(islykill_xml_saml_response)
+puts "signedDocument ready"
+puts signedDocument
+puts "========================================================="
+puts "========================================================="
+puts "========================================================="
+puts "========================================================="
+puts "========================================================="
+puts "========================================================="
+puts "========================================================="
+puts "========================================================="
+
         response = Onelogin::Saml::Response.new(islykill_xml_saml_response, options)
         response.settings = Onelogin::Saml::Settings.new(options)
 
 puts response.attributes
 puts response.validate!
-signedDocument = XMLSecurity::SignedDocument(islykill_xml_saml_response)
-puts signedDocument
 
         @name_id = response.name_id
         @attributes = response.attributes
