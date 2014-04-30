@@ -114,7 +114,7 @@ puts 'canon_hashed_element'
 puts canon_hashed_element
 puts '========='
 
-        digest_algorithm              = algorithm(REXML::XPath.first(ref, "//ds:DigestMethod"))
+        digest_algorithm              = algorithm(REXML::XPath.first(ref, '//ds:DigestMethod', 'ds' => DSIG))
 
 puts 'digest_algorithm'
 puts digest_algorithm
@@ -126,7 +126,7 @@ puts 'hash'
 puts hash
 puts '========='
 
-        digest_value                  = Base64.decode64(REXML::XPath.first(ref, "//ds:DigestValue", {"ds"=>DSIG}).text)
+        digest_value                  = Base64.decode64(REXML::XPath.first(ref, '//ds:DigestValue', {'ds'=>DSIG}).text)
 
 puts 'digest_value'
 puts digest_value
