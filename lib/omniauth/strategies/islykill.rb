@@ -44,7 +44,7 @@ module OmniAuth
         end
 
         # response is valid so we extract the information using xpath
-        xml_doc = REXML::Document.new(token_xml)
+        xml_doc = REXML::Document.new(islykill_xml_saml_response)
         prefix='Response/Assertion/AttributeStatement/Attribute[@Name="'
         postfix='"]/AttributeValue'
 
