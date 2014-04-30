@@ -25,52 +25,40 @@ module OmniAuth
       end
 
       def callback_phase
+        puts "   ___      _ _ _                _    "
+        puts "  / __ __ _| | | |__   __ _  ___| | __"
+        puts " / /  / _` | | | '_   / _` |/ __| |/ /"
+        puts "/ /__| (_| | | | |_) | (_| | (__|   < "
+        puts " ____/ __,_|_|_|_.__/  __,_| ___|_| _ "
+        puts "                                      "
 
-puts "   ___      _ _ _                _    "
-puts "  / __ __ _| | | |__   __ _  ___| | __"
-puts " / /  / _` | | | '_   / _` |/ __| |/ /"
-puts "/ /__| (_| | | | |_) | (_| | (__|   < "
-puts " ____/ __,_|_|_|_.__/  __,_| ___|_| _ "
-puts "                                      "
-puts request.params
         unless request.params['token']
           raise OmniAuth::Strategies::Islykill::ValidationError.new("Islykill response missing")
         end
-puts "Got a token"
+
         token_base64 = request.params['token']
         islykill_xml_saml_response = Base64.decode64(token_base64)
+        signedDocument = SignedXml::Document(islykill_xml_saml_response)
+        if !signedDocument.is_verified?
+            raise OmniAuth::Strategies::Islykill::ValidationError.new("Islykill response not valid")
+        end
 
-puts "about to create a signed document"
-signedDocument = SignedXml::Document(islykill_xml_saml_response)
-valid = signedDocument.is_verified?#("56:D1:0C:DF:29:58:1F:D4:64:C7:B5:DB:AE:18:EF:E6:88:2D:EC:4D",false)
-puts "signedDocument ready"
-puts valid
-puts signedDocument
-puts "========================================================="
-puts "========================================================="
-puts "========================================================="
-puts "========================================================="
-puts "========================================================="
-puts "========================================================="
-puts "========================================================="
-puts "========================================================="
+        # response is valid so we extract the information using xpath
+        xml_doc = REXML::Document.new(token_xml)
+        prefix='Response/Assertion/AttributeStatement/Attribute[@Name="'
+        postfix='"]/AttributeValue'
 
-        response = Onelogin::Saml::Response.new(islykill_xml_saml_response, options)
-        response.settings = Onelogin::Saml::Settings.new(options)
+        @attributes={
+            name: REXML::XPath.first(xml_doc,"#{prefix}Name#{postfix}").text,
+            kennitala: REXML::XPath.first(xml_doc,"#{prefix}UserSSN#{postfix}").text,
+            provider: REXML::XPath.first(xml_doc,"#{prefix}Authentication#{postfix}").text
+        }
 
-puts response.attributes
-puts response.validate!
-
-        @name_id = response.name_id
-        @attributes = response.attributes
+        @name_id = REXML::XPath.first(xml_doc,"Response/Assertion/Subject/NameID/@NameQualifier").text
 
         if @name_id.nil? || @name_id.empty?
           raise OmniAuth::Strategies::Islykill::ValidationError.new("SAML response missing 'name_id'")
         end
-
-puts "Got a name id " + @name_id
-
-        response.validate!
 
         super
       rescue 
@@ -97,10 +85,8 @@ puts "Got a name id " + @name_id
 
       info do
         {
-          :name  => @attributes[:name],
-          :email => @attributes[:email] || @attributes[:mail],
-          :first_name => @attributes[:first_name] || @attributes[:firstname] || @attributes[:firstName],
-          :last_name => @attributes[:last_name] || @attributes[:lastname] || @attributes[:lastName]
+          :name  => @attributes[:name],          
+          :kennitala => @attributes[:kennitala]
         }
       end
 
