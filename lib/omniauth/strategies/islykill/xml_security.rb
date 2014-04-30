@@ -125,7 +125,9 @@ puts '========='
 puts 'hash'
 puts hash
 puts '========='
-
+puts 'digest element'
+puts REXML::XPath.first(ref, '//ds:DigestValue', {'ds'=>DSIG}).text
+puts '========='
         digest_value                  = Base64.decode64(REXML::XPath.first(ref, '//ds:DigestValue', {'ds'=>DSIG}).text)
 
 puts 'digest_value'
