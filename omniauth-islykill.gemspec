@@ -14,6 +14,12 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'omniauth', '~> 1.2'
   gem.add_runtime_dependency 'ruby-saml', '~> 0.7.3'
 
+  # added for signed xml
+  gem.add_dependency "nokogiri", "~> 1.5"
+  gem.add_dependency "options"
+  # added for signed xml
+
+  
   gem.files         = ['README.md', 'CHANGELOG.md'] + Dir['lib/**/*.rb']
   #gem.test_files    = Dir['spec/**/*.rb']
   gem.require_paths = ["lib"]
