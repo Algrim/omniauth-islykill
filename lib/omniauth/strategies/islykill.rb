@@ -81,7 +81,10 @@ module OmniAuth
         end
       end
 
-      uid { @name_id }
+      uid { 
+        #@name_id 
+        @attributes[:kennitala]
+      }
 
       info do
         {
