@@ -54,7 +54,7 @@ module OmniAuth
             provider: REXML::XPath.first(xml_doc,"#{prefix}Authentication#{postfix}").text
         }
 
-        @name_id = REXML::XPath.first(xml_doc,"Response/Assertion/Subject/NameID/@NameQualifier").text
+        @name_id = REXML::XPath.first(xml_doc,"Response/Assertion/Subject/NameID/@NameQualifier").value()
 
         if @name_id.nil? || @name_id.empty?
           raise OmniAuth::Strategies::Islykill::ValidationError.new("SAML response missing 'name_id'")
