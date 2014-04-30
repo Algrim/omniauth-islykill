@@ -167,6 +167,9 @@ puts '========='
 
     def canon_algorithm(element)
       algorithm = element.attribute('Algorithm').value if element
+puts 'canon_algorithm'
+puts algorithm
+puts '---------------'
       case algorithm
         when "http://www.w3.org/2001/10/xml-exc-c14n#"         then Nokogiri::XML::XML_C14N_EXCLUSIVE_1_0
         when "http://www.w3.org/TR/2001/REC-xml-c14n-20010315" then Nokogiri::XML::XML_C14N_1_0
@@ -177,7 +180,13 @@ puts '========='
 
     def algorithm(element)
       algorithm = element.attribute("Algorithm").value if element
+puts 'digest_algorithm'
+puts algorithm
+puts '---------------'
       algorithm = algorithm && algorithm =~ /sha(.*?)$/i && $1.to_i
+puts 'digest_algorithm'
+puts algorithm
+puts '---------------'
       case algorithm
       when 256 then OpenSSL::Digest::SHA256
       when 384 then OpenSSL::Digest::SHA384
