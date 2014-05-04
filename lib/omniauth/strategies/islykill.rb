@@ -53,7 +53,7 @@ module OmniAuth
             kennitala: REXML::XPath.first(xml_doc,"#{prefix}UserSSN#{postfix}").text,
             provider: REXML::XPath.first(xml_doc,"#{prefix}Authentication#{postfix}").text
         }
-
+        
         @name_id = REXML::XPath.first(xml_doc,"Response/Assertion/Subject/NameID/@NameQualifier").value()
 
         if @name_id.nil? || @name_id.empty?
@@ -67,19 +67,19 @@ module OmniAuth
         fail!(:invalid_ticket, $!)
       end
 
-      def other_phase
-        if on_path?("#{request_path}/metadata")
-          # omniauth does not set the strategy on the other_phase
-          @env['omniauth.strategy'] ||= self
-          setup_phase
+    #  def other_phase
+    #    if on_path?("#{request_path}/metadata")
+    #      # omniauth does not set the strategy on the other_phase
+    #      @env['omniauth.strategy'] ||= self
+    #      setup_phase
 
-          response = Onelogin::Saml::Metadata.new
-          settings = Onelogin::Saml::Settings.new(options)
-          Rack::Response.new(response.generate(settings), 200, { "Content-Type" => "application/xml" }).finish
-        else
-          call_app!
-        end
-      end
+    #      response = Onelogin::Saml::Metadata.new
+    #      settings = Onelogin::Saml::Settings.new(options)
+    #      Rack::Response.new(response.generate(settings), 200, { "Content-Type" => "application/xml" }).finish
+    #    else
+    #      call_app!
+    #    end
+    #  end
 
       uid { 
         #@name_id 
