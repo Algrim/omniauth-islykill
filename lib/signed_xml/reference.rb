@@ -26,6 +26,7 @@ module SignedXml
     end
 
     def is_verified?
+      puts "22222222222222222222222222222222222222222222222222222222222222222222"
       result = apply_transforms == digest_value
       logger.info "verification failed for digest value [#{digest_value}]" unless result
       result

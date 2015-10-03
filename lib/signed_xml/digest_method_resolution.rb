@@ -5,6 +5,7 @@ module SignedXml
     include OpenSSL
 
     def new_digester_for_id(id)
+
       id = id && id =~ /sha(.*?)$/i && $1.to_i
       case id
       when 256 then OpenSSL::Digest::SHA256.new

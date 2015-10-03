@@ -28,9 +28,9 @@ module SignedXml
 
     def is_signed_info_verified?
       return false if public_key.nil?
-
       result = public_key.verify(new_digester_for_id(signed_info.signature_method), decoded_value, signed_info.apply_transforms)
       logger.info "verification of signature value [#{value}] failed" unless result
+      puts result
       result
     end
 

@@ -4,7 +4,7 @@ require 'ruby-saml'
 module OmniAuth
   module Strategies
     class Islykill
-      include OmniAuth::Strategy
+      include OmniAuth::Strategy      
 
       option :name_identifier_format, nil
       option :idp_sso_target_url_runtime_params, {}
@@ -18,8 +18,10 @@ module OmniAuth
           additional_params[mapped_param_key] = request.params[request_param_key.to_s] if request.params.has_key?(request_param_key.to_s)
         end if runtime_request_parameters
 
-        authn_request = Onelogin::Saml::Authrequest.new
-        settings = Onelogin::Saml::Settings.new(options)
+        # calling Authrequest.new will cast an error
+        # uninitialized constant OmniAuth::Strategies::Islykill::Onelogin
+        authn_request = Onelogin::RubySaml::Authrequest.new
+        settings = Onelogin::RubySaml::Settings.new(options)
 
         redirect(authn_request.create(settings, additional_params))
       end
@@ -63,7 +65,7 @@ module OmniAuth
         super
       rescue 
         fail!(:invalid_ticket, $!)
-      rescue Onelogin::Saml::ValidationError
+      rescue Onelogin::RubySaml::ValidationError
         fail!(:invalid_ticket, $!)
       end
 

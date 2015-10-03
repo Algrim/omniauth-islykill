@@ -12,7 +12,7 @@ module SignedXml
         @doc = thing
       else
         @doc = Nokogiri::XML(thing)
-      end
+      end      
     end
 
     def is_verifiable?
@@ -20,7 +20,7 @@ module SignedXml
     end
 
     def is_verified?(arg = nil)
-      unless is_verifiable?
+      unless is_verifiable?        
         logger.warn "document cannot be verified because it contains no <Signature> elements"
         return false
       end
