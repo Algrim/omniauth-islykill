@@ -3,7 +3,7 @@ require File.expand_path('../lib/omniauth-islykill/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.name          = 'omniauth-islykill'
   gem.version       = OmniAuth::ISLYKILL::VERSION
-  gem.summary       = 'This is a specific SAML strategy that handles authentication to Icelands Íslykill for OmniAuth.'
+  gem.summary       = 'SAML strategy to handle Icelands Íslykill for OmniAuth.'
   gem.description   = 'This is a specific SAML strategy that handles authentication to Icelands Íslykill for OmniAuth.'
   gem.license       = ''
 
@@ -15,8 +15,8 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'ruby-saml', '~> 1.0'
 
   # added for signed xml
-  gem.add_dependency "nokogiri"
-  gem.add_dependency "options"
+  gem.add_dependency "nokogiri", "~> 1.6"
+  gem.add_dependency "options", "~> 2.3"
   # added for signed xml
   
   gem.files         = ['README.md', 'CHANGELOG.md'] + Dir['lib/**/*.rb']
