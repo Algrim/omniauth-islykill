@@ -74,7 +74,7 @@ The service provider metadata used to ease configuration of the SAML SP in the I
   If not specified, the IdP is free to choose the name identifier format used
   in the response. Optional.
 
-* See the `Onelogin::Saml::Settings` class in the [Ruby SAML gem](https://github.com/onelogin/ruby-saml) for additional supported options.
+* See the `OneLogin::Saml::Settings` class in the [Ruby SAML gem](https://github.com/onelogin/ruby-saml) for additional supported options.
 
 ## Authors
 

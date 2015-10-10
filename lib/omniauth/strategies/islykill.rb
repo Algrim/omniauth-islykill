@@ -18,13 +18,34 @@ module OmniAuth
           additional_params[mapped_param_key] = request.params[request_param_key.to_s] if request.params.has_key?(request_param_key.to_s)
         end if runtime_request_parameters
 
-        # calling Authrequest.new will cast an error
-        # uninitialized constant OmniAuth::Strategies::Islykill::Onelogin
-        authn_request = Onelogin::RubySaml::Authrequest.new
-        settings = Onelogin::RubySaml::Settings.new(options)
+        authn_request = OneLogin::RubySaml::Authrequest.new
+        settings = OneLogin::RubySaml::Settings.new(options)
 
         redirect(authn_request.create(settings, additional_params))
       end
+
+      def read_attributes token_base64
+          islykill_xml_saml_response = Base64.decode64(token_base64)
+          signedDocument = SignedXml::Document(islykill_xml_saml_response)
+          if !signedDocument.is_verified?
+              raise OmniAuth::Strategies::Islykill::ValidationError.new("Islykill response not valid")
+          end
+
+          # response is valid so we extract the information using xpath
+          xml_doc = REXML::Document.new(islykill_xml_saml_response)
+          prefix='Response/Assertion/AttributeStatement/Attribute[@Name="'
+          postfix='"]/AttributeValue'
+
+          @attributes={
+              name: REXML::XPath.first(xml_doc,"#{prefix}Name#{postfix}").text,
+              kennitala: REXML::XPath.first(xml_doc,"#{prefix}UserSSN#{postfix}").text,
+              provider: REXML::XPath.first(xml_doc,"#{prefix}Authentication#{postfix}").text
+          }
+          
+          @name_id = REXML::XPath.first(xml_doc,"Response/Assertion/Subject/NameID/@NameQualifier").value()
+
+      end   
+
 
       def callback_phase
         puts "   ___      _ _ _                _    "
@@ -38,50 +59,18 @@ module OmniAuth
           raise OmniAuth::Strategies::Islykill::ValidationError.new("Islykill response missing")
         end
 
-        token_base64 = request.params['token']
-        islykill_xml_saml_response = Base64.decode64(token_base64)
-        signedDocument = SignedXml::Document(islykill_xml_saml_response)
-        if !signedDocument.is_verified?
-            raise OmniAuth::Strategies::Islykill::ValidationError.new("Islykill response not valid")
-        end
+        read_attributes request.params['token']
 
-        # response is valid so we extract the information using xpath
-        xml_doc = REXML::Document.new(islykill_xml_saml_response)
-        prefix='Response/Assertion/AttributeStatement/Attribute[@Name="'
-        postfix='"]/AttributeValue'
-
-        @attributes={
-            name: REXML::XPath.first(xml_doc,"#{prefix}Name#{postfix}").text,
-            kennitala: REXML::XPath.first(xml_doc,"#{prefix}UserSSN#{postfix}").text,
-            provider: REXML::XPath.first(xml_doc,"#{prefix}Authentication#{postfix}").text
-        }
-        
-        @name_id = REXML::XPath.first(xml_doc,"Response/Assertion/Subject/NameID/@NameQualifier").value()
-
-        if @name_id.nil? || @name_id.empty?
+       if @name_id.nil? || @name_id.empty?
           raise OmniAuth::Strategies::Islykill::ValidationError.new("SAML response missing 'name_id'")
         end
 
         super
       rescue 
         fail!(:invalid_ticket, $!)
-      rescue Onelogin::RubySaml::ValidationError
+      rescue OneLogin::RubySaml::ValidationError
         fail!(:invalid_ticket, $!)
       end
-
-    #  def other_phase
-    #    if on_path?("#{request_path}/metadata")
-    #      # omniauth does not set the strategy on the other_phase
-    #      @env['omniauth.strategy'] ||= self
-    #      setup_phase
-
-    #      response = Onelogin::Saml::Metadata.new
-    #      settings = Onelogin::Saml::Settings.new(options)
-    #      Rack::Response.new(response.generate(settings), 200, { "Content-Type" => "application/xml" }).finish
-    #    else
-    #      call_app!
-    #    end
-    #  end
 
       uid { 
         #@name_id 
